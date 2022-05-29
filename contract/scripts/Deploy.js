@@ -1,8 +1,9 @@
 
+const hre = require("hardhat");
 
 const main = async()=> {
-  
-  const Transactions = await hre.ethers.getContractFactory("Transactions");
+ 
+  const Transactions = await hre.ethers.getContractFactory("Transaction");
   const transactions = await Transactions.deploy();
 
   await transactions.deployed();
@@ -11,17 +12,14 @@ const main = async()=> {
 }
 
 
-const runMain = async ()=>{
+const runMainv= async()=>{
   try {
-    await main()
-    process.exit(0)
-  } catch (error) {
-    console.error(error)
-    process.exit(1)
+    await main();
+    process.exit(0);
     
+  } catch (error) {
+    console.error(error);
+    process.exit(1);    
   }
-
-
 }
- 
-runMain();
+  runMainv();

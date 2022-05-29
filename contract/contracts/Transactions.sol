@@ -1,40 +1,31 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-
-
-contract Transactions {
+contract Transaction {
     uint256 transactionCount;
 
-    event Transfer(address from, address reciever, uint amount, string message, uint256 timestamp, string keyword ); 
+    event transfer(address from, address receiver, uint amount, string message, uint256 timestamp, string keyword);
 
-    struct transfer {
+    struct transferStruct{
         address sender;
         address receiver;
         uint amount;
         string message;
         uint256 timestamp;
-        string keyword;
+        string  keyword;
     }
+    transferStruct[] transactions;
 
-    transfer[] _transactions;
+    function addToBlock (address payable receiver,  uint amount, string memory message, string memory keyword) public {
+       transactionCount+=1;
 
-    function addToBlock (address payable receiver, uint amount, string memory message, uint256 timestamp, string memory keyword) public {
-        transactionCount+=1;
-        _transactions.push(transfer(msg.sender, receiver, amount, message, block.timestamp,  keyword));
-
-        emit Transfer(msg.sender, receiver, amount, message, block.timestamp, keyword);
-
+        transactions.push(transferStruct(msg.sender, receiver, amount, message, block.timestamp,keyword));
     }
-    function getAllTransactions () public view returns(transfer[] memory) {
-       return _transactions;
-
+    function getAllTransactions()public view returns(transferStruct[] memory){
+        return transactions;
     }
-    function getTransactionCount () public view returns(uint256) {
+    function getTransactionCount()public view returns(uint256 ){
         return transactionCount;
-       
-
     }
-
 
 }
